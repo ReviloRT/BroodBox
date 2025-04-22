@@ -1,19 +1,16 @@
-#include <iostream>
-
-class Wrapper {
-public:
-    void init();
-    void update(float deltaTime);
-};
+#include "Wrapper.hpp"
 
 
-void Wrapper::init() {
+void Wrapper::init(State* state){
+    this->state = state;
     // Initialize wrapper engine
     std::cout << "Wrapper engine initialized." << std::endl;
 }
 
 void Wrapper::update(float deltaTime) {
-    // Update wrapper simulation
+    if (state == nullptr) {
+        std::cerr << "State is not initialized." << std::endl;
+        return;
+    }
     std::cout << "Wrapper updated with deltaTime: " << deltaTime << std::endl;
 }
-

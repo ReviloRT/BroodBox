@@ -1,33 +1,29 @@
-#include <iostream>
-
-
-class Simulation {
-private:
-    Physics physics;
-    Wrapper wrapper;
-public:
-    void init();
-    void run();
-};
-
+#include "Simulation.hpp"
 
 // Initialize the simulation
 void Simulation::init()  {
-    wrapper.init();
-    physics.init();
+    state = State();
+    wrapper.init(&state);
+    hardware.init(&state);
+    physics.init(&state);
+    hasInitialized = true;
 }
 
 // Run the simulation
 void Simulation::run()  {
+    if (!hasInitialized) { 
+        std::cout << "Simulation has not been initalised." << std::endl;
+        return;
+    }
     const float deltaTime = 0.1f;
-    float now = 0;
     while (true) {
-        now += deltaTime;
+        state.time += deltaTime;
         wrapper.update(deltaTime);
+        hardware.update(deltaTime);
         physics.update(deltaTime);
-        if (now % 1.0f < deltaTime/2.0) {
-            std::cout << "Simulation time: " << now << " seconds" << std::endl;
+        if (int(state.time/10) % 10 < deltaTime/2.0) {
+            std::cout << "Simulation time: " << state.time << " seconds" << std::endl;
         }
-        if (now >= 10.0f) {return;}
+        if (state.time >= 1.0f) {return;}
     }
 }

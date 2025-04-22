@@ -1,10 +1,13 @@
 #include <iostream>
-#include "Simulation.h"
+
+#include "Simulation.hpp"
 
 int main() {
     try {
         // Initialize the simulation
         Simulation simulation;
+
+        simulation.init();
 
         // Run the simulation
         simulation.run();
