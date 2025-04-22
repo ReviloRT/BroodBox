@@ -1,0 +1,3 @@
+[submodule "DroneSwarm"]
+	path = DroneSwarm
+	url = https://github.com/ReviloRT/DroneSwarm.git
